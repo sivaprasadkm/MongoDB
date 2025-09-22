@@ -1,0 +1,83 @@
+// EventTracker
+
+test> use EventTracker
+switched to db EventTracker
+
+// collection named UpcomingEvents and document using insertOne()
+
+EventTracker> db.UpcomingEvents.insertOne({name : "Music Fest", date :"19-09-2025", isFreeEntry : false, ticketPrice : 299.99, performers : ["DJ Max" , "Live Band"] ,location : {city: "chennai",venue: "Beach Arena"},specialCode : null})
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ccd77b3a9623969acebea4')
+}
+
+EventTracker> db.UpcomingEvents.find()
+[
+  {
+    _id: ObjectId('68ccd77b3a9623969acebea4'),
+    name: 'Music Fest',
+    date: '19-09-2025',
+    isFreeEntry: false,
+    ticketPrice: 299.99,
+    performers: [ 'DJ Max', 'Live Band' ],
+    location: { city: 'chennai', venue: 'Beach Arena' },
+    specialCode: null
+  }
+]
+
+//using insertMany()
+
+EventTracker> db.UpcomingEvents.insertMany([{name : "Dance", date :"20-09-2025", isFreeEntry : false, ticketPrice : 399.99, performers : ["Kalamandalam sreedevi" , "Live Show"] ,location : {city: "Trivandrum",venue: "Nishagandhi"},specialCode : null}, {name :"Food Carnivel",date:"21-09-2025",isFreeEntry : false, ticketPrice : 500, performers : ["chef Ramesh","Cooking Crew"],location : {city:"Banglore" , venue:"Central park"},specialCode : null}, {name : "Cricket league finals",date :"22-09-2025",isFreeEntry:false,ticketPrice : 699.99,performers: ["Mumbai","Wankhede stadium"],specialCode : null}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('68cce9c692776dd198cebea4'),
+    '1': ObjectId('68cce9c692776dd198cebea5'),
+    '2': ObjectId('68cce9c692776dd198cebea6')
+  }
+}
+
+//using find()
+
+EventTracker> db.UpcomingEvents.find()
+[
+  {
+    _id: ObjectId('68ccd77b3a9623969acebea4'),
+    name: 'Music Fest',
+    date: '19-09-2025',
+    isFreeEntry: false,
+    ticketPrice: 299.99,
+    performers: [ 'DJ Max', 'Live Band' ],
+    location: { city: 'chennai', venue: 'Beach Arena' },
+    specialCode: null
+  },
+  {
+    _id: ObjectId('68cce9c692776dd198cebea4'),
+    name: 'Dance',
+    date: '20-09-2025',
+    isFreeEntry: false,
+    ticketPrice: 399.99,
+    performers: [ 'Kalamandalam sreedevi', 'Live Show' ],
+    location: { city: 'Trivandrum', venue: 'Nishagandhi' },
+    specialCode: null
+  },
+  {
+    _id: ObjectId('68cce9c692776dd198cebea5'),
+    name: 'Food Carnivel',
+    date: '21-09-2025',
+    isFreeEntry: false,
+    ticketPrice: 500,
+    performers: [ 'chef Ramesh', 'Cooking Crew' ],
+    location: { city: 'Banglore', venue: 'Central park' },
+    specialCode: null
+  },
+  {
+    _id: ObjectId('68cce9c692776dd198cebea6'),
+    name: 'Cricket league finals',
+    date: '22-09-2025',
+    isFreeEntry: false,
+    ticketPrice: 699.99,
+    performers: [ 'Mumbai', 'Wankhede stadium' ],
+    specialCode: null
+  }
+]
