@@ -1,0 +1,261 @@
+//create DB BookStoreDB and insert data in collection name BookS
+Test> use BookStoreDB
+switched to db BookStoreDB
+BookStoreDB> db.Books.insertMany([
+... { title: "Harry Potter and the Philosopher's Stone", author: "J.K. Rowling", price: 399.99, year: 1997, available: true },
+...     { title: "The Hobbit", author: "J.R.R. Tolkien", price: 299.99, year: 1937, available: true },
+...     { title: "The Da Vinci Code", author: "Dan Brown", price: 499.99, year: 2003, available: false },
+...     { title: "A Game of Thrones", author: "George R.R. Martin", price: 599.99, year: 1996, available: true },
+...     { title: "The Girl on the Train", author: "Paula Hawkins", price: 349.99, year: 2015, available: true },
+...     { title: "Becoming", author: "Michelle Obama", price: 449.99, year: 2018, available: true },
+...     { title: "The Catcher in the Rye", author: "J.D. Salinger", price: 199.99, year: 1951, available: false },
+...     { title: "The Night Circus", author: "Erin Morgenstern", price: 299.99, year: 2011, available: true },
+...     { title: "1984", author: "George Orwell", price: 249.99, year: 1949, available: true },
+...     { title: "Educated", author: "Tara Westover", price: 399.99, year: 2018, available: false }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('68d0ed900b1650c26fcebea4'),
+    '1': ObjectId('68d0ed900b1650c26fcebea5'),
+    '2': ObjectId('68d0ed900b1650c26fcebea6'),
+    '3': ObjectId('68d0ed900b1650c26fcebea7'),
+    '4': ObjectId('68d0ed900b1650c26fcebea8'),
+    '5': ObjectId('68d0ed900b1650c26fcebea9'),
+    '6': ObjectId('68d0ed900b1650c26fcebeaa'),
+    '7': ObjectId('68d0ed900b1650c26fcebeab'),
+    '8': ObjectId('68d0ed900b1650c26fcebeac'),
+    '9': ObjectId('68d0ed900b1650c26fcebead')
+  }
+}
+
+//Find and display all books priced less than 500, formatted neatly.
+BookStoreDB> db.Books.find({price:{$lt:500}}).pretty()
+[
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea4'),
+    title: "Harry Potter and the Philosopher's Stone",
+    author: 'J.K. Rowling',
+    price: 399.99,
+    year: 1997,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea5'),
+    title: 'The Hobbit',
+    author: 'J.R.R. Tolkien',
+    price: 299.99,
+    year: 1937,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea6'),
+    title: 'The Da Vinci Code',
+    author: 'Dan Brown',
+    price: 499.99,
+    year: 2003,
+    available: false
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea8'),
+    title: 'The Girl on the Train',
+    author: 'Paula Hawkins',
+    price: 349.99,
+    year: 2015,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea9'),
+    title: 'Becoming',
+    author: 'Michelle Obama',
+    price: 449.99,
+    year: 2018,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebeaa'),
+    title: 'The Catcher in the Rye',
+    author: 'J.D. Salinger',
+    price: 199.99,
+    year: 1951,
+    available: false
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebeab'),
+    title: 'The Night Circus',
+    author: 'Erin Morgenstern',
+    price: 299.99,
+    year: 2011,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebeac'),
+    title: '1984',
+    author: 'George Orwell',
+    price: 249.99,
+    year: 1949,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebead'),
+    title: 'Educated',
+    author: 'Tara Westover',
+    price: 399.99,
+    year: 2018,
+    available: false
+  }
+]
+
+//Find one book written by "J.K. Rowling".
+BookStoreDB> db.Books.findOne({author:"J.K. Rowling"})
+{
+  _id: ObjectId('68d0ed900b1650c26fcebea4'),
+  title: "Harry Potter and the Philosopher's Stone",
+  author: 'J.K. Rowling',
+  price: 399.99,
+  year: 1997,
+  available: true
+}
+
+//Find and display books published after the year 2010 AND priced greater than or equal to 300.
+BookStoreDB> db.Books.find({$and:[{year:{$gt:2010}},{price:{$gte:300}}]})
+[
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea8'),
+    title: 'The Girl on the Train',
+    author: 'Paula Hawkins',
+    price: 349.99,
+    year: 2015,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea9'),
+    title: 'Becoming',
+    author: 'Michelle Obama',
+    price: 449.99,
+    year: 2018,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebead'),
+    title: 'Educated',
+    author: 'Tara Westover',
+    price: 399.99,
+    year: 2018,
+    available: false
+  }
+]
+
+//Find books that are either priced less than 200 OR are not available.
+BookStoreDB> db.Books.find({$or:[{price:{$lt:200}},{available:false}]})
+[
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea6'),
+    title: 'The Da Vinci Code',
+    author: 'Dan Brown',
+    price: 499.99,
+    year: 2003,
+    available: false
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebeaa'),
+    title: 'The Catcher in the Rye',
+    author: 'J.D. Salinger',
+    price: 199.99,
+    year: 1951,
+    available: false
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebead'),
+    title: 'Educated',
+    author: 'Tara Westover',
+    price: 399.99,
+    year: 2018,
+    available: false
+  }
+]
+
+//Find books whose price is NOT equal to 450.
+BookStoreDB> db.Books.find({price:{$ne:450}})
+[
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea4'),
+    title: "Harry Potter and the Philosopher's Stone",
+    author: 'J.K. Rowling',
+    price: 399.99,
+    year: 1997,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea5'),
+    title: 'The Hobbit',
+    author: 'J.R.R. Tolkien',
+    price: 299.99,
+    year: 1937,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea6'),
+    title: 'The Da Vinci Code',
+    author: 'Dan Brown',
+    price: 499.99,
+    year: 2003,
+    available: false
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea7'),
+    title: 'A Game of Thrones',
+    author: 'George R.R. Martin',
+    price: 599.99,
+    year: 1996,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea8'),
+    title: 'The Girl on the Train',
+    author: 'Paula Hawkins',
+    price: 349.99,
+    year: 2015,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebea9'),
+    title: 'Becoming',
+    author: 'Michelle Obama',
+    price: 449.99,
+    year: 2018,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebeaa'),
+    title: 'The Catcher in the Rye',
+    author: 'J.D. Salinger',
+    price: 199.99,
+    year: 1951,
+    available: false
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebeab'),
+    title: 'The Night Circus',
+    author: 'Erin Morgenstern',
+    price: 299.99,
+    year: 2011,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebeac'),
+    title: '1984',
+    author: 'George Orwell',
+    price: 249.99,
+    year: 1949,
+    available: true
+  },
+  {
+    _id: ObjectId('68d0ed900b1650c26fcebead'),
+    title: 'Educated',
+    author: 'Tara Westover',
+    price: 399.99,
+    year: 2018,
+    available: false
+  }
+]
